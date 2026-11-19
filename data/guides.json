@@ -4,53 +4,263 @@
   "name": "上課・講座",
   "draft": true,
   "steps": [
-   {"title": "打開混音器電源", "dev": "soundcraft"},
-   {"title": "打開無線麥克風接收器", "dev": "s11", "detail": ["無線麥克風裝好電池，打開開關"]},
-   {"title": "有線麥克風接到供桌的麥克風座", "dev": "mic_l", "wires": [{"from": "有線麥克風", "to": "mic_l"}, {"from": "有線麥克風", "to": "mic_r"}]},
-   {"title": "打開擴大機 #1、#2", "dev": "s09", "detail": ["擴大機要在混音器開好之後才開"]},
-   {"title": "把混音器上麥克風的推桿推上來", "dev": "soundcraft", "check": {"q": "大殿喇叭有聲音了嗎？", "sym": "sound:0"}},
-   {"title": "用 iPad 控制面板把投影機降下來、開機", "dev": "s25"},
-   {"title": "筆電接到簡報輸入面板", "dev": "tx_l", "wires": [{"from": "筆電", "to": "tx_l", "cable": "HDMI"}, {"from": "筆電", "to": "tx_r", "cable": "HDMI"}], "detail": ["左右兩個面板，接其中一個"]},
-   {"title": "用 iPad 控制面板選擇畫面來源", "dev": "s25", "check": {"q": "投影機有畫面了嗎？", "sym": "picture"}}
+   {
+    "title": "打開混音器電源",
+    "dev": "soundcraft"
+   },
+   {
+    "title": "打開無線麥克風接收器",
+    "dev": "s11",
+    "detail": [
+     "無線麥克風裝好電池，打開開關"
+    ]
+   },
+   {
+    "title": "有線麥克風接到供桌的麥克風座",
+    "dev": "mic_l",
+    "wires": [
+     {
+      "from": "有線麥克風",
+      "to": "mic_l",
+      "cable": "XLR"
+     },
+     {
+      "from": "有線麥克風",
+      "to": "mic_r",
+      "cable": "XLR"
+     }
+    ]
+   },
+   {
+    "title": "打開擴大機 #1、#2",
+    "dev": "s09",
+    "detail": [
+     "擴大機要在混音器開好之後才開"
+    ]
+   },
+   {
+    "title": "把混音器上麥克風的推桿推上來",
+    "dev": "soundcraft",
+    "check": {
+     "q": "大殿喇叭有聲音了嗎？",
+     "sym": "sound:0"
+    }
+   },
+   {
+    "title": "用 iPad 控制面板把投影機降下來、開機",
+    "dev": "s25"
+   },
+   {
+    "title": "筆電接到簡報輸入面板",
+    "dev": "tx_l",
+    "wires": [
+     {
+      "from": "筆電",
+      "to": "tx_l",
+      "cable": "HDMI"
+     },
+     {
+      "from": "筆電",
+      "to": "tx_r",
+      "cable": "HDMI"
+     }
+    ],
+    "detail": [
+     "左右兩個面板，接其中一個",
+     "筆電沒有 HDMI 孔的話，要用 USB-C 轉 HDMI 轉接頭"
+    ]
+   },
+   {
+    "title": "用 iPad 控制面板選擇畫面來源",
+    "dev": "s25",
+    "check": {
+     "q": "投影機有畫面了嗎？",
+     "sym": "picture"
+    }
+   }
   ],
-  "end": ["用 iPad 控制面板關掉投影機、升上去", "先關擴大機 #1、#2", "再關混音器", "麥克風關機，電池拿去充電"]
+  "end": [
+   "用 iPad 控制面板關掉投影機、升上去",
+   "先關擴大機 #1、#2",
+   "再關混音器",
+   "麥克風關機，電池拿去充電"
+  ]
  },
  {
   "id": "puja",
   "name": "法會・共修",
   "draft": true,
   "steps": [
-   {"title": "打開混音器電源", "dev": "soundcraft"},
-   {"title": "打開無線麥克風接收器", "dev": "s11", "detail": ["無線麥克風裝好電池，打開開關"]},
-   {"title": "有線麥克風接到供桌的麥克風座", "dev": "mic_l", "wires": [{"from": "有線麥克風", "to": "mic_l"}, {"from": "有線麥克風", "to": "mic_r"}]},
-   {"title": "打開擴大機 #1、#2", "dev": "s09", "detail": ["擴大機要在混音器開好之後才開"]},
-   {"title": "把混音器上麥克風的推桿推上來", "dev": "soundcraft", "check": {"q": "大殿喇叭有聲音了嗎？", "sym": "sound:0"}}
+   {
+    "title": "打開混音器電源",
+    "dev": "soundcraft"
+   },
+   {
+    "title": "打開無線麥克風接收器",
+    "dev": "s11",
+    "detail": [
+     "無線麥克風裝好電池，打開開關"
+    ]
+   },
+   {
+    "title": "有線麥克風接到供桌的麥克風座",
+    "dev": "mic_l",
+    "wires": [
+     {
+      "from": "有線麥克風",
+      "to": "mic_l",
+      "cable": "XLR"
+     },
+     {
+      "from": "有線麥克風",
+      "to": "mic_r",
+      "cable": "XLR"
+     }
+    ]
+   },
+   {
+    "title": "打開擴大機 #1、#2",
+    "dev": "s09",
+    "detail": [
+     "擴大機要在混音器開好之後才開"
+    ]
+   },
+   {
+    "title": "把混音器上麥克風的推桿推上來",
+    "dev": "soundcraft",
+    "check": {
+     "q": "大殿喇叭有聲音了嗎？",
+     "sym": "sound:0"
+    }
+   }
   ],
-  "end": ["先關擴大機 #1、#2", "再關混音器", "麥克風關機，電池拿去充電"]
+  "end": [
+   "先關擴大機 #1、#2",
+   "再關混音器",
+   "麥克風關機，電池拿去充電"
+  ]
  },
  {
   "id": "live",
   "name": "直播",
   "draft": true,
   "steps": [
-   {"title": "打開直播筆電", "dev": "acer"},
-   {"title": "混音器接到 UR22C 錄音介面", "dev": "s70", "wires": [{"from": "soundcraft", "to": "s70"}], "detail": ["UR22C 是直播的聲音來源"]},
-   {"title": "活動攝影機接到 AverMedia 擷取卡", "dev": "avermedia", "wires": [{"from": "cam_event", "to": "avermedia", "cable": "HDMI"}, {"from": "avermedia", "to": "acer"}]},
-   {"title": "直播輸出接到 ATEN 擷取卡", "dev": "aten_cap", "wires": [{"from": "live_out", "to": "aten_cap", "cable": "HDMI"}, {"from": "aten_cap", "to": "acer"}]},
-   {"title": "網路線接到直播筆電", "dev": "acer", "wires": [{"from": "lan", "to": "acer"}]},
-   {"title": "打開直播軟體", "dev": "acer", "check": {"q": "直播的畫面和聲音都出來了嗎？", "sym": "sound:6"}}
+   {
+    "title": "打開直播筆電",
+    "dev": "acer"
+   },
+   {
+    "title": "混音器接到 UR22C 錄音介面",
+    "dev": "s70",
+    "wires": [
+     {
+      "from": "soundcraft",
+      "to": "s70",
+      "cable": [
+       "XLR",
+       "6.35mm"
+      ],
+      "maybe": true
+     }
+    ],
+    "detail": [
+     "UR22C 是直播的聲音來源"
+    ]
+   },
+   {
+    "title": "活動攝影機接到 AverMedia 擷取卡",
+    "dev": "avermedia",
+    "wires": [
+     {
+      "from": "cam_event",
+      "to": "avermedia",
+      "cable": "HDMI"
+     },
+     {
+      "from": "avermedia",
+      "to": "acer",
+      "cable": [
+       "USB-A",
+       "USB-C"
+      ],
+      "maybe": true
+     }
+    ]
+   },
+   {
+    "title": "直播輸出接到 ATEN 擷取卡",
+    "dev": "aten_cap",
+    "wires": [
+     {
+      "from": "live_out",
+      "to": "aten_cap",
+      "cable": "HDMI"
+     },
+     {
+      "from": "aten_cap",
+      "to": "acer",
+      "cable": [
+       "USB-A",
+       "USB-C"
+      ],
+      "maybe": true
+     }
+    ]
+   },
+   {
+    "title": "網路線接到直播筆電",
+    "dev": "acer",
+    "wires": [
+     {
+      "from": "lan",
+      "to": "acer",
+      "cable": "RJ45"
+     }
+    ]
+   },
+   {
+    "title": "打開直播軟體",
+    "dev": "acer",
+    "check": {
+     "q": "直播的畫面和聲音都出來了嗎？",
+     "sym": "sound:6"
+    }
+   }
   ],
-  "end": ["結束直播，關閉直播軟體", "關掉直播筆電"]
+  "end": [
+   "結束直播，關閉直播軟體",
+   "關掉直播筆電"
+  ]
  },
  {
   "id": "relay",
   "name": "轉播到其他樓層",
   "draft": true,
   "steps": [
-   {"title": "先讓大殿有聲音", "detail": ["照「法會・共修」的步驟做到喇叭有聲音"]},
-   {"title": "到要轉播的樓層，打開擴大器", "detail": ["二樓大教室、一樓齋堂各有一台 YAMAHA MA2120 擴大器"]},
-   {"title": "把混音器上轉播輸出的推桿推上來", "dev": "soundcraft", "check": {"q": "那一層有聲音了嗎？", "sym": "sound"}}
+   {
+    "title": "先讓大殿有聲音",
+    "detail": [
+     "照「法會・共修」的步驟做到喇叭有聲音"
+    ]
+   },
+   {
+    "title": "到要轉播的樓層，打開擴大器",
+    "detail": [
+     "二樓大教室、一樓齋堂各有一台 YAMAHA MA2120 擴大器"
+    ]
+   },
+   {
+    "title": "把混音器上轉播輸出的推桿推上來",
+    "dev": "soundcraft",
+    "check": {
+     "q": "那一層有聲音了嗎？",
+     "sym": "sound"
+    }
+   }
   ],
-  "end": ["把轉播輸出的推桿拉下來", "關掉各樓層的擴大器"]
+  "end": [
+   "把轉播輸出的推桿拉下來",
+   "關掉各樓層的擴大器"
+  ]
  }
 ]
