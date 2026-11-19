@@ -30,6 +30,9 @@ h1{font-size:1.7em;font-weight:600;line-height:1.3;margin:.2em 0 .8em}
 .portrow{display:grid;grid-template-columns:72px 1fr;gap:1em;align-items:center;padding:.6em 0;border-top:1px solid var(--ink)}
 .portrow:last-child{border-bottom:1px solid var(--ink)}
 .portrow b{font-weight:600}
+.portrow p{margin:.3em 0 0}
+.fig{margin:1.25em 0}
+.fig figcaption{margin-bottom:.3em}
 .ask{font-size:1.3em;margin:1.5em 0 .5em}
 ol{padding-left:1.4em;margin:0 0 1.5em}
 li{margin:.2em 0}
@@ -133,20 +136,64 @@ function facts(id){
 
 /* ---------- 插孔線條圖 ---------- */
 const PORTS = {
-  'HDMI': ['影像和聲音，接投影機、螢幕、擷取卡', '<path d="M8 11H56V22L50 30H14L8 22Z"/><path d="M14 15H50V20L46 25H18L14 20Z"/>'],
-  'USB-A': ['擷取卡、錄音介面接電腦', '<rect x="10" y="12" width="44" height="18"/><rect x="15" y="17" width="34" height="6"/>'],
-  'USB-C': ['較新的筆電、擷取卡', '<rect x="14" y="13" width="36" height="14" rx="7"/><path d="M21 20H43"/>'],
-  'XLR': ['麥克風、混音器之間的音訊線', '<circle cx="32" cy="20" r="15"/><path d="M29 5V9H35V5"/><circle cx="25" cy="17" r="2"/><circle cx="39" cy="17" r="2"/><circle cx="32" cy="27" r="2"/>'],
-  '6.35mm': ['大支的音源插頭，接混音器、錄音介面', '<rect x="4" y="13" width="18" height="14"/><path d="M22 17H52L58 20L52 23H22"/><path d="M38 17V23M46 17V23"/>'],
-  '3.5mm': ['小支的耳機插頭，接筆電、手機', '<rect x="10" y="15" width="14" height="10"/><path d="M24 18H46L50 20L46 22H24"/><path d="M35 18V22M41 18V22"/>'],
-  'RJ45': ['網路線', '<rect x="14" y="7" width="36" height="25"/><path d="M26 32V37H38V32"/><path d="M19 11V18M23 11V18M27 11V18M31 11V18M35 11V18M39 11V18M43 11V18M47 11V18"/>']
+  'HDMI': ['影像和聲音，接投影機、螢幕、擷取卡', '梯形的窄邊對準插孔的窄邊，直直推進去。拔的時候捏住插頭，不要拉線。', '<path d="M8 11H56V22L50 30H14L8 22Z"/><path d="M14 15H50V20L46 25H18L14 20Z"/>'],
+  'USB-A': ['擷取卡、錄音介面接電腦', '有分正反面，插不進去就翻面，不要硬推。', '<rect x="10" y="12" width="44" height="18"/><rect x="15" y="17" width="34" height="6"/>'],
+  'USB-C': ['較新的筆電、擷取卡', '不分正反面，對準直接插。', '<rect x="14" y="13" width="36" height="14" rx="7"/><path d="M21 20H43"/>'],
+  'XLR': ['麥克風、混音器之間的音訊線', '插頭的凸起對準插座的缺口，推到聽見「喀」一聲。拔的時候先壓住插座上的按鈕再拔。', '<circle cx="32" cy="20" r="15"/><path d="M29 5V9H35V5"/><circle cx="25" cy="17" r="2"/><circle cx="39" cy="17" r="2"/><circle cx="32" cy="27" r="2"/>'],
+  '6.35mm': ['大支的音源插頭，接混音器、錄音介面', '插拔前先把音量轉小，直直插到底。', '<rect x="4" y="13" width="18" height="14"/><path d="M22 17H52L58 20L52 23H22"/><path d="M38 17V23M46 17V23"/>'],
+  '3.5mm': ['小支的耳機插頭，接筆電、手機', '插拔前先把音量轉小，直直插到底。', '<rect x="10" y="15" width="14" height="10"/><path d="M24 18H46L50 20L46 22H24"/><path d="M35 18V22M41 18V22"/>'],
+  'RJ45': ['網路線', '塑膠卡榫對準插孔的凹槽，推到聽見「喀」一聲。拔的時候先壓住卡榫再拔。', '<rect x="14" y="7" width="36" height="25"/><path d="M26 32V37H38V32"/><path d="M19 11V18M23 11V18M27 11V18M31 11V18M35 11V18M39 11V18M43 11V18M47 11V18"/>']
 };
-const portSvg = k => PORTS[k] ? `<svg viewBox="0 0 64 40" width="64" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">${PORTS[k][1]}</svg>` : '';
+const portSvg = k => PORTS[k] ? `<svg viewBox="0 0 64 40" width="64" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">${PORTS[k][2]}</svg>` : '';
 function wireHTML(w, nm){
   const cs = [].concat(w.cable || []);
   let h = `<div class="wire"><p>${esc(nm(w.from))} → ${esc(nm(w.to))}</p>`;
   if (cs.length) h += (w.maybe ? '<p class="quiet">可能是其中一種</p>' : '') + '<div class="ports">' + cs.map(c => `<span class="port">${portSvg(c)}<span>${esc(c)}</span></span>`).join('') + '</div>';
+  if (w.note) h += `<p>${esc(w.note)}</p>`;
+  if (cs.length === 1 && PORTS[cs[0]]) h += `<p class="quiet">${esc(PORTS[cs[0]][1])}</p>`;
   return h + '</div>';
+}
+
+
+/* ---------- 設備面板示意圖（依原廠說明書的配置） ---------- */
+const FIGS = {
+  'ur22c-front': [['combo','in1',28,'輸入 1'],['knob','g1',64],['combo','in2',100,'輸入 2'],['knob','g2',136],['switch','hiz',164],['switch','mono',184],['knob','mix',214],['phones','ph',248],['knob','phk',276],['knob','out',312,'OUTPUT'],['led','pw',342]],
+  'ur22c-rear': [['switch','src',30,'POWER SOURCE'],['usbc','usb',92,'USB 3.0'],['usbc','dc',138],['switch','p48',174],['din','mo',212],['din','mi',250],['jack','r',294],['jack','l',326]],
+  'p4300-front': [['button','power',40,'電源開關'],['led','pled',96,'電源燈'],['led','s1',170],['led','s2',186],['led','s3',202],['led','s4',218],['led','l1',262],['led','l2',278],['led','l3',294],['led','l4',310]]
+};
+function partSvg(k, x, hi){
+  const st = hi ? 'stroke="var(--acc)" stroke-width="2.5"' : 'stroke="currentColor" stroke-width="1.5"', y = 46;
+  switch (k) {
+    case 'combo': return `<g ${st}><circle cx="${x}" cy="${y}" r="16"/><circle cx="${x}" cy="${y}" r="5"/><circle cx="${x - 8}" cy="${y - 7}" r="1.5"/><circle cx="${x + 8}" cy="${y - 7}" r="1.5"/><circle cx="${x}" cy="${y + 10}" r="1.5"/></g>`;
+    case 'knob': return `<g ${st}><circle cx="${x}" cy="${y}" r="10"/><path d="M${x} ${y - 10}V${y - 4}"/></g>`;
+    case 'switch': return `<g ${st}><rect x="${x - 5}" y="${y - 10}" width="10" height="20"/><path d="M${x - 5} ${y}H${x + 5}"/></g>`;
+    case 'phones': return `<g ${st}><circle cx="${x}" cy="${y}" r="7"/><circle cx="${x}" cy="${y}" r="2.5"/></g>`;
+    case 'jack': return `<g ${st}><circle cx="${x}" cy="${y}" r="9"/><circle cx="${x}" cy="${y}" r="3.5"/></g>`;
+    case 'usbc': return `<g ${st}><rect x="${x - 12}" y="${y - 5}" width="24" height="10" rx="5"/></g>`;
+    case 'din': return `<g ${st}><circle cx="${x}" cy="${y}" r="13"/><circle cx="${x - 6}" cy="${y - 2}" r="1.5"/><circle cx="${x}" cy="${y - 6}" r="1.5"/><circle cx="${x + 6}" cy="${y - 2}" r="1.5"/><path d="M${x - 3} ${y + 13}V${y + 9}H${x + 3}V${y + 13}"/></g>`;
+    case 'button': return `<g ${st}><rect x="${x - 11}" y="${y - 11}" width="22" height="22"/><path d="M${x} ${y - 6}V${y}M${x - 5} ${y - 3}A7 7 0 1 0 ${x + 5} ${y - 3}"/></g>`;
+    case 'led': return `<g ${st}><circle cx="${x}" cy="${y}" r="${hi ? 5 : 3}"/></g>`;
+  }
+  return '';
+}
+function figHTML(f){
+  const parts = FIGS[f.fig]; if (!parts) return '';
+  const hi = new Set(f.hi || []);
+  const labs = parts.filter(p => hi.has(p[1]) && p[3]).sort((a, b) => a[2] - b[2]).map(([, id, x, name]) => {
+    const w = [...name].reduce((t, ch) => t + (/[\u2E80-\uFFEF]/.test(ch) ? 15 : 9.5), 0);
+    const x0 = Math.max(6, Math.min(354 - w, x - w / 2));
+    return { x, x0, w, name };
+  });
+  const ends = [];
+  labs.forEach(l => { let r = 0; while (ends[r] !== undefined && ends[r] > l.x0 - 10) r++; ends[r] = l.x0 + l.w; l.r = r; });
+  const H = 100 + Math.max(1, ends.length) * 24;
+  let s = `<svg viewBox="0 0 360 ${H}" width="100%" fill="none" role="img" aria-label="${esc(f.cap)}"><rect x="4" y="12" width="352" height="68" stroke="currentColor" stroke-width="1.5"/>`;
+  parts.forEach(([k, id, x]) => { s += partSvg(k, x, hi.has(id)); });
+  labs.forEach(l => {
+    const y = 108 + l.r * 24;
+    s += `<path d="M${l.x} 84V${y - 15}" stroke="var(--acc)" stroke-width="1.5"/><text x="${l.x0}" y="${y}" font-size="15" fill="var(--acc)" font-weight="600" style="font-family:inherit">${esc(l.name)}</text>`;
+  });
+  return `<figure class="fig"><figcaption class="quiet">${esc(f.cap)}　示意圖</figcaption>${s}</svg></figure>`;
 }
 
 /* ---------- 各畫面 ---------- */
@@ -158,7 +205,7 @@ const screens = {
     if (S.tune) h += `<label>色相<input type="range" min="0" max="360" step="1" value="${S.hue}" data-set="hue"></label><label>彩度<input type="range" min="0" max="0.25" step="0.005" value="${S.chroma}" data-set="chroma"></label>`;
     return h + '</div>';
   },
-  ports(){ return top() + '<h1>認識插孔</h1>' + Object.entries(PORTS).map(([k, v]) => `<div class="portrow">${portSvg(k)}<div><b>${esc(k)}</b><br>${esc(v[0])}</div></div>`).join(''); },
+  ports(){ return top() + '<h1>認識插孔</h1>' + Object.entries(PORTS).map(([k, v]) => `<div class="portrow">${portSvg(k)}<div><b>${esc(k)}</b>　${esc(v[0])}<p>${esc(v[1])}</p></div></div>`).join(''); },
   trouble(){ return top() + '<h1>哪裡出問題？</h1><div class="opts">' + B('沒有聲音', 'go', 'sound') + B('沒有畫面', 'go', 'picture') + '</div>'; },
   step(){
     const g = GUIDES[S.g], st = g.steps[S.si], d = DEV[st.dev] || {};
@@ -168,6 +215,7 @@ const screens = {
     if (d.loc) h += `<p class="quiet">在${esc(locName(d.loc))}</p>`;
     (st.wires || []).forEach(w => { h += wireHTML(w, nm); });
     (st.detail || []).forEach(t => { h += `<p>${esc(t)}</p>`; });
+    (st.figs || []).forEach(f => { h += figHTML(f); });
     if (st.check) h += `<p class="ask">${esc(st.check.q)}</p><div class="yn">${B('有', 'next')}${B('沒有', 'stuck')}</div>`;
     else h += `<div class="opts">${B('下一步', 'next')}</div>`;
     return h;
