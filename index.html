@@ -22,6 +22,10 @@ a{color:var(--acc)}
 h1{font-size:1.7em;font-weight:600;line-height:1.3;margin:.2em 0 .8em}
 .opts button{display:block;width:100%;font-size:1.3em;padding:.55em 0;border-top:1px solid var(--ink)}
 .opts button:last-child{border-bottom:1px solid var(--ink)}
+.opts.gap{margin-top:2.5em}
+.ask{font-size:1.3em;margin:1.5em 0 .5em}
+ol{padding-left:1.4em;margin:0 0 1.5em}
+li{margin:.2em 0}
 .yn{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
 .yn button{font-size:1.6em;padding:.6em 0;text-align:center}
 .yn button+button{border-left:1px solid var(--ink)}
@@ -63,7 +67,7 @@ const S = {
   sym: null, q: null, loc: null, dev: null,
 
 };
-let SYS, DEV = {}, LINKS = [];
+let SYS, DEV = {}, LINKS = [], GUIDES = [];
 
 function paint(){
   const h = S.hue, c = S.chroma, r = document.documentElement.style;
@@ -122,10 +126,28 @@ function facts(id){
 /* ---------- 各畫面 ---------- */
 const screens = {
   home(){
-    let h = '<h1>現在要做什麼？</h1><div class="opts">' + B('哪裡沒有聲音', 'go', 'sound') + B('哪裡沒有畫面', 'go', 'picture') + B('查設備', 'go', 'locs') + B('高階版：接線圖與完整清單', 'adv') + '</div>';
+    let h = '<h1>今天要做什麼？</h1><div class="opts">' + GUIDES.map((g, i) => B(g.name, 'guide', i)).join('') + '</div>';
+    h += '<div class="opts gap">' + B('出問題了', 'go', 'trouble') + B('查設備', 'go', 'locs') + B('高階版：接線圖與完整清單', 'adv') + '</div>';
     h += '<div class="foot">' + B('夜間', 'dark', '', `aria-pressed="${S.dark}"`) + B('色彩', 'tune', '', `aria-pressed="${S.tune}"`);
     if (S.tune) h += `<label>色相<input type="range" min="0" max="360" step="1" value="${S.hue}" data-set="hue"></label><label>彩度<input type="range" min="0" max="0.25" step="0.005" value="${S.chroma}" data-set="chroma"></label>`;
     return h + '</div>';
+  },
+  trouble(){ return top() + '<h1>哪裡出問題？</h1><div class="opts">' + B('沒有聲音', 'go', 'sound') + B('沒有畫面', 'go', 'picture') + '</div>'; },
+  step(){
+    const g = GUIDES[S.g], st = g.steps[S.si], d = DEV[st.dev] || {};
+    const nm = x => DEV[x] ? label(x) : x;
+    let h = `<div class="top">${B('上一步', 'back')}${B('首頁', 'home')}</div><p class="quiet">${esc(g.name)}　${S.si + 1}／${g.steps.length}${g.draft ? '　待確認' : ''}</p>`;
+    h += `<h1>${esc(st.title)}</h1>`;
+    if (d.loc) h += `<p class="quiet">在${esc(locName(d.loc))}</p>`;
+    (st.wires || []).forEach(w => { h += `<p>${esc(nm(w.from))} → ${esc(nm(w.to))}${w.cable ? '　' + esc(w.cable) : ''}</p>`; });
+    (st.detail || []).forEach(t => { h += `<p>${esc(t)}</p>`; });
+    if (st.check) h += `<p class="ask">${esc(st.check.q)}</p><div class="yn">${B('有', 'next')}${B('沒有', 'stuck')}</div>`;
+    else h += `<div class="opts">${B('下一步', 'next')}</div>`;
+    return h;
+  },
+  done(){
+    const g = GUIDES[S.g];
+    return `<div class="top">${B('上一步', 'back')}</div><p class="quiet">${esc(g.name)}</p><h1>準備好了</h1><p class="quiet">結束時</p><ol>` + g.end.map(t => `<li>${esc(t)}</li>`).join('') + '</ol><div class="opts">' + B('回首頁', 'home') + '</div>';
   },
   sound(){ return top() + '<h1>哪裡沒有聲音？</h1><div class="opts">' + SYS.symptoms.sound.map((s, i) => B(s.name, 'sym', 'sound:' + i)).join('') + '</div>'; },
   picture(){ return top() + '<h1>哪裡沒有畫面？</h1><div class="opts">' + SYS.symptoms.picture.map((s, i) => B(s.name, 'sym', 'picture:' + i)).join('') + '</div>'; },
@@ -146,7 +168,7 @@ const screens = {
   },
 };
 
-function go(screen){ S.hist.push({ screen: S.screen, q: S.q, loc: S.loc, dev: S.dev }); S.screen = screen; render(); scrollTo(0, 0); }
+function go(screen){ S.hist.push({ screen: S.screen, q: S.q, loc: S.loc, dev: S.dev, si: S.si }); S.screen = screen; render(); scrollTo(0, 0); }
 function back(){
   const p = S.hist.pop();
   if (!p) { S.screen = 'home'; } else Object.assign(S, p);
@@ -177,14 +199,17 @@ document.addEventListener('click', e => {
     render(); scrollTo(0, 0);
   }
   else if (a === 'restart') { const s = S.sym; S.hist = []; startFlow(s); S.hist = [{ screen: 'home' }]; }
+  else if (a === 'guide') { S.g = +v; S.si = 0; go('step'); }
+  else if (a === 'next') { S.hist.push({ screen: 'step', si: S.si }); if (S.si < GUIDES[S.g].steps.length - 1) S.si++; else S.screen = 'done'; render(); scrollTo(0, 0); }
+  else if (a === 'stuck') { const k = GUIDES[S.g].steps[S.si].check.sym; if (k.includes(':')) { const [c, i] = k.split(':'); startFlow(SYS.symptoms[c][+i]); } else go(k); }
   else if (a === 'loc') { S.loc = v; go('devs'); }
   else if (a === 'dev') { S.dev = v; go('dev'); }
   else if (a === 'dark') { S.dark = !S.dark; store.set('dark', S.dark); render(); }
   else if (a === 'tune') { S.tune = !S.tune; render(); }
 });
 document.addEventListener('input', e => { const k = e.target.dataset.set; if (!k) return; S[k] = +e.target.value; store.set(k, S[k]); paint(); });
-Promise.all(['data/system.json', 'data/devices.json'].map(u => fetch(u).then(r => r.json()))).then(([sys, devs]) => {
-  SYS = sys; LINKS = sys.links;
+Promise.all(['data/system.json', 'data/devices.json', 'data/guides.json'].map(u => fetch(u).then(r => r.json()))).then(([sys, devs, guides]) => {
+  SYS = sys; LINKS = sys.links; GUIDES = guides;
   devs.forEach(d => DEV[d.id] = d); sys.devices.forEach(d => DEV[d.id] = d);
   render();
 }).catch(() => { $('#app').textContent = '資料載入失敗，請重新整理'; });
