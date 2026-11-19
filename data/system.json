@@ -106,7 +106,8 @@
    "item": "攝影機",
    "loc": "三樓 大殿",
    "model": "AVER PTC330",
-   "src": "沙盒"
+   "src": "沙盒",
+   "manual": "https://www.aver.com/Downloads/search?q=PTC330N"
   },
   {
    "id": "ck535",
@@ -194,7 +195,8 @@
    "item": "喇叭",
    "loc": "三樓 大殿",
    "model": "BOSE MA12EX",
-   "src": "沙盒"
+   "src": "沙盒",
+   "manual": "https://assets.boseprofessional.com/m/74db36845c17cd34/original/ig_ma12_ma12ex.pdf"
   },
   {
    "id": "fs2c",
@@ -202,7 +204,8 @@
    "item": "喇叭",
    "loc": "三樓 大殿",
    "model": "BOSE FS2C",
-   "src": "沙盒"
+   "src": "沙盒",
+   "manual": "https://assets.boseprofessional.com/m/4a6c245d1821fdc6/original/ig_freespace_fs2c.pdf"
   },
   {
    "id": "out_4f",
