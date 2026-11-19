@@ -4,80 +4,49 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>花蓮分院音控室</title>
-<meta name="theme-color" content="#f8f8f8">
+<meta name="theme-color" content="#f8f8fa">
 <link rel="manifest" href="manifest.json">
 <style>
 :root{--bg:#fafafa;--ink:#222;--acc:#3a6ea5}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%}
-body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;display:flex;flex-direction:column}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:18px/1.5 system-ui,-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:left}
 button:focus{outline:none}
 button:focus-visible{outline:1px solid var(--acc);outline-offset:2px}
 button[aria-pressed=true]{color:var(--acc);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.3em}
 a{color:var(--acc)}
-#bar{display:flex;flex-wrap:wrap;align-items:center;gap:.25em 1em;padding:.5em 1em;border-bottom:1px solid var(--ink)}
-#bar .sep{width:1px;align-self:stretch;background:var(--ink);opacity:.35}
-#bar .end{margin-left:auto}
-#bar label{display:flex;align-items:center;gap:.5em}
+#app{max-width:34em;margin:0 auto;padding:1em 1.25em 3em}
+.top{display:flex;gap:1.25em;align-items:baseline;margin-bottom:1.5em}
+.quiet{opacity:.6}
+h1{font-size:1.7em;font-weight:600;line-height:1.3;margin:.2em 0 .8em}
+.opts button{display:block;width:100%;font-size:1.3em;padding:.55em 0;border-top:1px solid var(--ink)}
+.opts button:last-child{border-bottom:1px solid var(--ink)}
+.yn{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.yn button{font-size:1.6em;padding:.6em 0;text-align:center}
+.yn button+button{border-left:1px solid var(--ink)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:.2em 1em;margin:0 0 1.5em}
+dt{opacity:.6}
+dd{margin:0}
+.foot{display:flex;flex-wrap:wrap;gap:.5em 1.25em;align-items:center;margin-top:2.5em}
+.foot label{display:flex;align-items:center;gap:.5em}
 input[type=range]{-webkit-appearance:none;appearance:none;background:transparent;width:7em;height:1.5em;margin:0}
 input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--ink)}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:18px;margin-top:-9px;background:var(--acc);border:0;border-radius:0}
 input[type=range]::-moz-range-track{height:1px;background:var(--ink)}
 input[type=range]::-moz-range-thumb{width:10px;height:18px;background:var(--acc);border:0;border-radius:0}
-#main{flex:1;min-height:0;display:grid;grid-template-columns:1fr minmax(16em,28%)}
-#view{overflow:auto;padding:1em}
-#info{border-left:1px solid var(--ink);padding:1em;overflow:auto}
-svg{display:block}
-svg text{fill:var(--ink);font-family:inherit}
-h2{font-size:1.4em;font-weight:600;margin:0 0 .5em;line-height:1.3}
-h3{font-size:1em;font-weight:600;margin:1em 0 .25em}
-h3:first-child{margin-top:0}
-dl{display:grid;grid-template-columns:auto 1fr;gap:0 1em;margin:0}
-dt{opacity:.6}
-dd{margin:0}
-.dim{opacity:.35}
-.list button{display:block;width:100%;padding:.15em 0}
-.sel{color:var(--acc)}
-table{border-collapse:collapse;width:100%}
-td{padding:.1em 1em .1em 0;vertical-align:top}
-td:last-child{white-space:nowrap;padding-right:0}
-tr.row{cursor:pointer}
-.step{display:grid;grid-template-columns:2em 1fr auto;gap:0 .75em;padding:.2em 0;align-items:baseline}
-.step .act{display:flex;gap:1em}
-.legend{display:grid;grid-template-columns:3em 1fr;gap:.25em .75em;align-items:center}
-#exit{display:none;position:fixed;top:.5em;right:1em}
-html.present body{font-size:clamp(16px,1.5vw,44px)}
-html.present #bar{display:none}
-html.present #exit{display:block}
-@media (orientation:portrait),(max-width:720px){
- #main{grid-template-columns:1fr;grid-template-rows:auto auto;overflow:auto}
- #view{overflow:visible}
- #info{border-left:0;border-top:1px solid var(--ink)}
- #bar{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
- #bar::-webkit-scrollbar{display:none}
- #bar .end{margin-left:1em}
- .wide{display:none}
- body.dev #info{display:none}
- tr.inline td{padding:.5em 0 1em}
-}
+
 @media print{
- @page{size:A4 landscape;margin:12mm}
+ @page{size:A4;margin:15mm}
  :root{--bg:#fff!important;--ink:#000!important}
- html,body{height:auto;display:block;font-size:11pt}
  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
- #bar,#exit{display:none!important}
- #main{display:block}
- #view{overflow:visible;padding:0}
- #info{border:0;border-top:1px solid #000;padding:1em 0 0;break-inside:avoid}
- .wide{display:table-cell}
+ body{font-size:12pt}
+ .top,.foot,.yn,.opts{display:none!important}
 }
 </style>
 </head>
 <body>
-<nav id="bar"></nav>
-<div id="main"><section id="view"></section><aside id="info"></aside></div>
-<button id="exit" type="button">結束簡報</button>
+<div id="app"></div>
 <script>
 (() => {
 const $ = s => document.querySelector(s);
@@ -89,295 +58,136 @@ const store = {
 let dark0 = false;
 try { dark0 = matchMedia('(prefers-color-scheme: dark)').matches; } catch(e){}
 const S = {
-  view: store.get('view', 'wire'), layer: store.get('layer', 'desk'), type: 'all', loc: 'all',
-  sel: null, tune: false, printW: 0,
+  screen: 'home', hist: [], tune: false,
   dark: store.get('dark', dark0), hue: store.get('hue', 250), chroma: store.get('chroma', 0.12),
-  tr: { target: null, step: 0, bad: null }
+  sym: null, q: null, loc: null, dev: null,
+
 };
 let SYS, DEV = {}, LINKS = [];
 
 function paint(){
   const h = S.hue, c = S.chroma, r = document.documentElement.style;
-  const bg = S.dark ? `oklch(0.17 0.008 ${h})` : `oklch(0.985 0.006 ${h})`;
-  r.setProperty('--bg', bg);
+  r.setProperty('--bg', S.dark ? `oklch(0.17 0.008 ${h})` : `oklch(0.985 0.006 ${h})`);
   r.setProperty('--ink', S.dark ? `oklch(0.92 0.006 ${h})` : `oklch(0.22 0.01 ${h})`);
   r.setProperty('--acc', S.dark ? `oklch(0.78 ${c} ${h})` : `oklch(0.55 ${c} ${h})`);
   const m = document.querySelector('meta[name=theme-color]');
   if (m) m.content = S.dark ? '#1b1d21' : '#f8f8fa';
 }
-
 const label = id => (SYS.labels[id] || DEV[id]?.name || DEV[id]?.item || id);
 const typeName = t => SYS.types[t] || t;
-const DASH = { video: '', audio: '7 5', data: '1 5' };
+const sp = t => (/^[A-Za-z0-9]/.test(t) ? ' ' : '') + t + (/[A-Za-z0-9]$/.test(t) ? ' ' : '');
 const FLOORS = ['一樓','二樓','三樓','四樓'];
 const locKey = l => { const i = FLOORS.indexOf((l || '').slice(0, 2)); return (i < 0 ? 9 : i) + (l || ''); };
+const locName = l => (l || '未標位置').replace(/\s+/g, '');
+const B = (txt, act, val = '', extra = '') => `<button type="button" data-act="${act}" data-val="${esc(val)}" ${extra}>${esc(txt)}</button>`;
+const top = (backTo = 'home') => `<div class="top">${B(backTo === 'home' ? '首頁' : '上一步', 'back')}</div>`;
 
-function linksOf(layer, type){
-  return LINKS.filter(l => (!layer || l.layer === layer) && (type === 'all' || l.type === type));
+/* ---------- 引導流程 ---------- */
+const ups = (id, types) => [...new Set(LINKS.filter(l => l.to === id && types.includes(l.type)).map(l => l.from))];
+function startFlow(sym){ S.sym = sym; S.q = { kind: 'check', node: sym.node, i: 0, n: 1 }; go('flow'); }
+function after(q){
+  const s = S.sym;
+  if (q.rest && q.rest.length) return { kind: 'check', node: q.rest[0], i: 99, n: q.n + 1, down: q.down, rest: q.rest.slice(1) };
+  if (s.path && q.i < s.path.length - 1) return { kind: 'check', node: s.path[q.i + 1], i: q.i + 1, n: q.n + 1, down: q.node };
+  const u = ups(q.node, s.types);
+  if (!u.length) return { kind: 'clear', n: q.n };
+  if (u.length === 1) return { kind: 'check', node: u[0], i: 99, n: q.n + 1, down: q.node };
+  return { kind: 'pick', node: q.node, opts: u, n: q.n + 1 };
+}
+function flow(){
+  const q = S.q, d = DEV[q.node] || {};
+  let h = top('prev') + `<p class="quiet">${esc(S.sym.name)}${q.kind === 'check' || q.kind === 'pick' ? `　第 ${q.n} 步` : ''}</p>`;
+  if (q.kind === 'check') {
+    h += `<h1>${esc(sp(label(q.node)).trimStart())}有開機、線有接好嗎？</h1>`;
+    if (d.loc) h += `<p class="quiet">在${esc(locName(d.loc))}</p>`;
+    h += `<div class="yn">${B('有', 'yes')}${B('沒有', 'no')}</div>`;
+  } else if (q.kind === 'pick') {
+    h += `<h1>${esc(sp(label(q.node)).trimStart())}的訊號是從哪裡來的？</h1><div class="opts">` + q.opts.map(id => B(label(id), 'pick', id)).join('') + B('不確定，全部檢查', 'pick', '*') + '</div>';
+  } else if (q.kind === 'bad') {
+    h += `<h1>問題可能在${esc(sp(label(q.node)).trimEnd())}</h1>` + facts(q.node);
+    if (q.down) h += `<p>也可能是${esc(sp(label(q.node)))}接到${esc(sp(label(q.down)))}的那條線。</p>`;
+    h += '<p>處理不了的話，請聯絡音控主責。</p><div class="opts">' + B('重新檢查', 'restart') + B('回首頁', 'home') + '</div>';
+  } else if (q.kind === 'clear') {
+    h += '<h1>這條路上的設備都有開、線也都接好</h1><p>請聯絡音控主責。</p><div class="opts">' + B('重新檢查', 'restart') + B('回首頁', 'home') + '</div>';
+  }
+  return h;
+}
+function facts(id){
+  const d = DEV[id] || {}, r = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : '';
+  return '<dl>' + r('位置', esc(locName(d.loc))) + r('品項', esc(d.item)) + r('型號', esc(d.model)) + r('狀態', esc(d.status))
+    + r('備註', esc(d.note).replace(/\n/g, '<br>')) + r('說明書', d.manual ? `<a href="${esc(d.manual)}" target="_blank" rel="noopener">開啟</a>` : '')
+    + r('相關', d.ref ? (/^https?:/.test(d.ref) ? `<a href="${esc(d.ref)}" target="_blank" rel="noopener">開啟</a>` : esc(d.ref)) : '') + '</dl>';
 }
 
-/* ---------- bar ---------- */
-function btn(txt, on, act, val){ return `<button type="button" data-act="${act}" data-val="${esc(val)}" aria-pressed="${on}">${esc(txt)}</button>`; }
-function bar(){
-  let h = btn('接線', S.view === 'wire', 'view', 'wire') + btn('設備', S.view === 'dev', 'view', 'dev') + btn('排障', S.view === 'trouble', 'view', 'trouble');
-  h += '<span class="sep"></span>';
-  if (S.view === 'wire') {
-    h += SYS.layers.map(l => btn(l.name, S.layer === l.id, 'layer', l.id)).join('');
-    h += '<span class="sep"></span>';
-  }
-  if (S.view !== 'dev') {
-    h += btn('全部', S.type === 'all', 'type', 'all') + Object.keys(SYS.types).map(t => btn(typeName(t), S.type === t, 'type', t)).join('');
-  } else {
+/* ---------- 各畫面 ---------- */
+const screens = {
+  home(){
+    let h = '<h1>現在要做什麼？</h1><div class="opts">' + B('哪裡沒有聲音', 'go', 'sound') + B('哪裡沒有畫面', 'go', 'picture') + B('查設備', 'go', 'locs') + B('高階版：接線圖與完整清單', 'adv') + '</div>';
+    h += '<div class="foot">' + B('夜間', 'dark', '', `aria-pressed="${S.dark}"`) + B('色彩', 'tune', '', `aria-pressed="${S.tune}"`);
+    if (S.tune) h += `<label>色相<input type="range" min="0" max="360" step="1" value="${S.hue}" data-set="hue"></label><label>彩度<input type="range" min="0" max="0.25" step="0.005" value="${S.chroma}" data-set="chroma"></label>`;
+    return h + '</div>';
+  },
+  sound(){ return top() + '<h1>哪裡沒有聲音？</h1><div class="opts">' + SYS.symptoms.sound.map((s, i) => B(s.name, 'sym', 'sound:' + i)).join('') + '</div>'; },
+  picture(){ return top() + '<h1>哪裡沒有畫面？</h1><div class="opts">' + SYS.symptoms.picture.map((s, i) => B(s.name, 'sym', 'picture:' + i)).join('') + '</div>'; },
+  flow,
+  locs(){
     const locs = [...new Set(Object.values(DEV).map(d => d.loc).filter(Boolean))].sort((a, b) => locKey(a).localeCompare(locKey(b)));
-    h += btn('全部', S.loc === 'all', 'loc', 'all') + locs.map(l => btn(l.replace(/\s+/g, ''), S.loc === l, 'loc', l)).join('');
-  }
-  h += `<span class="end"></span>` + btn('夜間', S.dark, 'dark', '') + btn('色彩', S.tune, 'tune', '') + btn('簡報', false, 'present', '');
-  if (S.tune) {
-    h += `<label>色相<input type="range" min="0" max="360" step="1" value="${S.hue}" data-set="hue"></label>`;
-    h += `<label>彩度<input type="range" min="0" max="0.25" step="0.005" value="${S.chroma}" data-set="chroma"></label>`;
-  }
-  $('#bar').innerHTML = h;
+    return top() + '<h1>設備在哪裡？</h1><div class="opts">' + locs.map(l => B(locName(l), 'loc', l)).join('') + '</div>';
+  },
+  devs(){
+    const list = Object.entries(DEV).filter(([, d]) => d.loc === S.loc).sort((a, b) => label(a[0]).localeCompare(label(b[0]), 'zh-Hant'));
+    return top('prev') + `<h1>${esc(locName(S.loc))}</h1><div class="opts">` + list.map(([id, d]) => B(label(id) + (d.status && d.status !== '正常' ? '　' + d.status : ''), 'dev', id)).join('') + '</div>';
+  },
+  dev(){
+    const id = S.dev, ins = LINKS.filter(l => l.to === id), outs = LINKS.filter(l => l.from === id);
+    let h = top('prev') + `<h1>${esc(label(id))}</h1>` + facts(id);
+    const li = (ls, k, end) => ls.length ? `<p class="quiet">${k}</p><div class="opts">` + ls.map(l => B(`${label(l[end])}　${typeName(l.type)}`, 'dev', l[end])).join('') + '</div>' : '';
+    return h + li(ins, '從這些設備接進來', 'from') + li(outs, '接出去到這些設備', 'to');
+  },
+};
+
+function go(screen){ S.hist.push({ screen: S.screen, q: S.q, loc: S.loc, dev: S.dev }); S.screen = screen; render(); scrollTo(0, 0); }
+function back(){
+  const p = S.hist.pop();
+  if (!p) { S.screen = 'home'; } else Object.assign(S, p);
+  if (S.screen === 'home') S.hist = [];
+  render(); scrollTo(0, 0);
+}
+function render(){
+  paint();
+  $('#app').innerHTML = screens[S.screen]();
 }
 
-/* ---------- layout ---------- */
-const tw = (s, fs) => [...s].reduce((w, ch) => w + (/[⺀-￯]/.test(ch) ? fs : fs * 0.56), 0);
-function wrap(s, max, fs){
-  if (tw(s, fs) <= max) return [s];
-  const words = s.split(' ');
-  if (words.length > 1 && words.every(w => tw(w, fs) <= max)) {
-    const ws = []; let c = '';
-    words.forEach(w => { const t = c ? c + ' ' + w : w; if (tw(t, fs) > max && c) { ws.push(c); c = w; } else c = t; });
-    return [...ws, c];
-  }
-  const out = []; let cur = '';
-  for (const ch of s) {
-    if (tw(cur + ch, fs) > max && cur) { out.push(cur.trim()); cur = ''; }
-    cur += ch;
-  }
-  if (cur.trim()) out.push(cur.trim());
-  return out;
-}
-function layout(links, W, portrait){
-  const ids = []; links.forEach(l => { if (!ids.includes(l.from)) ids.push(l.from); if (!ids.includes(l.to)) ids.push(l.to); });
-  const depth = Object.fromEntries(ids.map(i => [i, 0]));
-  for (let k = 0; k < ids.length; k++) links.forEach(l => { depth[l.to] = Math.max(depth[l.to], depth[l.from] + 1); });
-  for (let k = 0; k < 3; k++) [...ids].sort((a, b) => depth[b] - depth[a]).forEach(id => {
-    const nx = links.filter(l => l.from === id).map(l => depth[l.to]);
-    if (nx.length) depth[id] = Math.min(...nx) - 1;
-  });
-  const maxD = Math.max(0, ...Object.values(depth));
-  const cols = Array.from({ length: maxD + 1 }, () => []);
-  ids.forEach(i => cols[depth[i]].push(i));
-  const pos = {}; const rank = () => cols.forEach(c => c.forEach((id, i) => pos[id] = i));
-  rank();
-  for (let pass = 0; pass < 4; pass++) {
-    const fwd = pass % 2 === 0;
-    const order = fwd ? cols.slice(1) : cols.slice(0, -1).reverse();
-    order.forEach(c => {
-      const bc = id => { const nb = links.filter(l => fwd ? l.to === id : l.from === id).map(l => pos[fwd ? l.from : l.to]); return nb.length ? nb.reduce((a, b) => a + b, 0) / nb.length : pos[id]; };
-      const m = Object.fromEntries(c.map(id => [id, bc(id)]));
-      c.sort((a, b) => m[a] - m[b]);
-      c.forEach((id, i) => pos[id] = i);
-    });
-  }
-  const fs = 16, lh = 20, N = {};
-  if (!portrait) {
-    const colW = W / cols.length, rowH = 56;
-    const maxN = Math.max(...cols.map(c => c.length));
-    cols.forEach((c, ci) => c.forEach((id, i) => {
-      const lines = wrap(label(id), colW - 36, fs);
-      N[id] = { x: (ci + .5) * colW, y: (i + .5) * rowH + (maxN - c.length) * rowH / 2 + 8, lines, w: Math.max(...lines.map(s => tw(s, fs))), h: lines.length * lh };
-    }));
-    return { N, W, H: maxN * rowH + 16, portrait };
-  }
-  let y = 8;
-  cols.forEach(c => {
-    const per = Math.max(1, Math.min(c.length, Math.floor(W / 88)));
-    if (c.length > per) { const has = id => links.some(l => l.from === id); c = [...c.filter(id => !has(id)), ...c.filter(has)]; }
-    for (let s = 0; s < c.length; s += per) {
-      const row = c.slice(s, s + per), cw = W / row.length;
-      const ls = row.map(id => wrap(label(id), cw - 16, fs));
-      const hh = Math.max(...ls.map(l => l.length)) * lh;
-      row.forEach((id, i) => N[id] = { x: (i + .5) * cw, y: y + hh / 2, lines: ls[i], w: Math.max(...ls[i].map(t => tw(t, fs))), h: ls[i].length * lh });
-      y += hh + 24;
-    }
-    y += 24;
-  });
-  return { N, W, H: y, portrait };
-}
-
-/* ---------- wiring view ---------- */
-function related(){
-  if (!S.sel) return null;
-  if (S.sel.startsWith('L:')) { const l = LINKS[+S.sel.slice(2)]; return { links: new Set([l]), nodes: new Set([l.from, l.to]), node: null }; }
-  const ls = LINKS.filter(l => l.from === S.sel || l.to === S.sel);
-  return { links: new Set(ls), nodes: new Set([S.sel, ...ls.map(l => l.from), ...ls.map(l => l.to)]), node: S.sel };
-}
-function wire(){
-  const v = $('#view');
-  const links = linksOf(S.layer, S.type);
-  const portrait = isPortrait();
-  const f = document.documentElement.classList.contains('present') && !S.printW ? Math.min(2.4, Math.max(1.2, innerWidth / 1100)) : 1;
-  const W = S.printW || Math.max(280, (v.clientWidth - 32) / f);
-  const R = related(), L = { N: {}, W, H: 0, portrait };
-  const comp = {}, find = x => comp[x] === x ? x : (comp[x] = find(comp[x]));
-  links.forEach(l => { comp[l.from] ??= l.from; comp[l.to] ??= l.to; comp[find(l.from)] = find(l.to); });
-  const groups = {}; links.forEach(l => (groups[find(l.from)] ??= []).push(l));
-  Object.values(groups).sort((a, b) => b.length - a.length).forEach(g => {
-    const P = layout(g, W, portrait), dy = L.H ? L.H + 24 : 0;
-    Object.entries(P.N).forEach(([id, n]) => L.N[id] = { ...n, y: n.y + dy });
-    L.H = dy + P.H;
-  });
-  const mk = (id, col) => `<marker id="${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9" fill="none" stroke="${col}" stroke-width="1.5"/></marker>`;
-  let s = `<svg viewBox="0 0 ${L.W} ${L.H}" width="${L.W * f}" height="${L.H * f}" role="img" aria-label="接線圖"><defs>${mk('ar', 'var(--ink)')}${mk('ara', 'var(--acc)')}</defs>`;
-  links.forEach(l => {
-    const a = L.N[l.from], b = L.N[l.to], i = LINKS.indexOf(l);
-    let d;
-    if (!L.portrait) {
-      const x1 = a.x + a.w / 2 + 8, x2 = b.x - b.w / 2 - 8, dx = Math.max(24, (x2 - x1) / 2);
-      d = `M${x1} ${a.y}C${x1 + dx} ${a.y} ${x2 - dx} ${b.y} ${x2} ${b.y}`;
-    } else {
-      const y1 = a.y + a.h / 2 + 4, y2 = b.y - b.h / 2 - 4, dy = Math.max(16, (y2 - y1) / 2);
-      d = `M${a.x} ${y1}C${a.x} ${y1 + dy} ${b.x} ${y2 - dy} ${b.x} ${y2}`;
-    }
-    const on = R && R.links.has(l), off = R && !on;
-    const col = on ? 'var(--acc)' : 'var(--ink)';
-    s += `<g data-link="${i}"><path d="${d}" fill="none" stroke="${col}" stroke-width="${l.type === 'data' ? 2.2 : 1.5}" stroke-linecap="round" stroke-dasharray="${DASH[l.type]}" marker-end="url(#${on ? 'ara' : 'ar'})" opacity="${off ? .2 : 1}"/><path d="${d}" fill="none" stroke="transparent" stroke-width="16" pointer-events="stroke"/></g>`;
-  });
-  Object.entries(L.N).forEach(([id, n]) => {
-    const on = R && R.node === id, off = R && !R.nodes.has(id);
-    const y0 = n.y - n.h / 2 + 15;
-    s += `<g data-node="${esc(id)}" opacity="${off ? .3 : 1}"><rect x="${n.x - n.w / 2 - 6}" y="${n.y - n.h / 2 - 4}" width="${n.w + 12}" height="${n.h + 8}" fill="transparent"/>`;
-    n.lines.forEach((t, k) => { s += `<text x="${n.x}" y="${y0 + k * 20}" text-anchor="middle" font-size="16" stroke="var(--bg)" stroke-width="6" stroke-linejoin="round" paint-order="stroke" ${on ? 'style="fill:var(--acc)" font-weight="600"' : ''}>${esc(t)}</text>`; });
-    s += '</g>';
-  });
-  v.innerHTML = s + '</svg>';
-}
-
-/* ---------- device list ---------- */
-function devices(){
-  const list = Object.entries(DEV).filter(([, d]) => S.loc === 'all' || d.loc === S.loc)
-    .sort((a, b) => locKey(a[1].loc).localeCompare(locKey(b[1].loc)) || (a[1].item || '').localeCompare(b[1].item || ''));
-  let h = '<table>', last = null;
-  list.forEach(([id, d]) => {
-    if (d.loc !== last) { last = d.loc; h += `<tr><td colspan="4"><h3>${esc((d.loc || '未標位置').replace(/\s+/g, ' '))}</h3></td></tr>`; }
-    h += `<tr class="row${S.sel === id ? ' sel' : ''}" data-node="${esc(id)}"><td>${esc(label(id))}</td><td class="wide">${esc(d.item || '')}</td><td>${esc(d.model || '')}</td><td>${esc(d.status || '')}</td></tr>`;
-    if (S.sel === id && isPortrait()) h += `<tr class="inline"><td colspan="4">${infoHTML()}</td></tr>`;
-  });
-  $('#view').innerHTML = h + '</table>';
-}
-
-/* ---------- troubleshooting ---------- */
-function chain(target){
-  const ls = linksOf(null, S.type), out = [{ id: target, next: null }], seen = new Set([target]);
-  for (let i = 0; i < out.length; i++) ls.filter(l => l.to === out[i].id && !seen.has(l.from)).forEach(l => { seen.add(l.from); out.push({ id: l.from, next: out[i].id, type: l.type }); });
-  return out;
-}
-function trouble(){
-  const T = S.tr; let h = '';
-  if (!T.target) {
-    h += '<h2>哪裡沒有訊號？</h2>';
-    SYS.layers.forEach(ly => {
-      const ls = linksOf(ly.id, S.type);
-      const sinks = [...new Set(ls.map(l => l.to))].filter(id => !ls.some(l => l.from === id));
-      if (!sinks.length) return;
-      h += `<h3>${esc(ly.name)}</h3><div class="list">` + sinks.map(id => `<button type="button" data-act="target" data-val="${esc(id)}">${esc(label(id))}</button>`).join('') + '</div>';
-    });
-  } else {
-    const c = chain(T.target);
-    h += `<h2>${esc(label(T.target))}</h2><div>`;
-    c.forEach((x, i) => {
-      const q = i === 0 ? `${label(x.id)} 有電、輸入切換正確嗎？` : `${label(x.id)} 有電、有${typeName(x.type)}輸出到 ${label(x.next)} 嗎？`;
-      const done = i < T.step, cur = i === T.step && !T.bad;
-      h += `<div class="step${done ? ' dim' : ''}${T.bad === x.id ? ' sel' : ''}"><span>${i + 1}</span><span>${esc(q)}</span><span class="act">`;
-      if (cur) h += `<button type="button" data-act="ok">正常</button><button type="button" data-act="bad" data-val="${esc(x.id)}">異常</button>`;
-      else if (done) h += '正常';
-      else if (T.bad === x.id) h += '異常';
-      h += '</span></div>';
-    });
-    h += '</div>';
-    if (T.bad) {
-      const x = c.find(y => y.id === T.bad);
-      h += `<h3>問題在 ${esc(label(x.id))}${x.next ? `，或它到 ${esc(label(x.next))} 的連線` : ''}</h3>`;
-    } else if (T.step >= c.length) {
-      h += '<h3>這條路徑都檢查過了，請聯絡音控主責</h3>';
-    }
-    h += '<p><button type="button" data-act="retarget">重選</button></p>';
-  }
-  $('#view').innerHTML = h;
-}
-
-/* ---------- info panel ---------- */
-function legend(){
-  return '<div class="legend">' + Object.keys(SYS.types).map(t =>
-    `<svg width="40" height="12" viewBox="0 0 40 12"><line x1="2" y1="6" x2="38" y2="6" stroke="var(--ink)" stroke-width="${t === 'data' ? 2.2 : 1.5}" stroke-linecap="round" stroke-dasharray="${DASH[t]}"/></svg><span>${esc(typeName(t))}</span>`).join('') + '</div>';
-}
-const isPortrait = () => matchMedia('(orientation:portrait),(max-width:720px)').matches && !S.printW;
-function info(){ $('#info').innerHTML = infoHTML(); }
-function infoHTML(){
-  if (!S.sel) return legend();
-  if (S.sel.startsWith('L:')) {
-    const l = LINKS[+S.sel.slice(2)];
-    return `<h2>${esc(label(l.from))} → ${esc(label(l.to))}</h2><dl><dt>訊號</dt><dd>${esc(typeName(l.type))}</dd><dt>位置</dt><dd>${esc(SYS.layers.find(y => y.id === l.layer)?.name)}</dd><dt>狀態</dt><dd>${l.ok ? '已確認' : '待現場確認'}</dd>${l.note ? `<dt>備註</dt><dd>${esc(l.note)}</dd>` : ''}</dl>`;
-  }
-  const id = S.sel, d = DEV[id] || {};
-  const row = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : '';
-  let h = `<h2>${esc(label(id))}</h2><dl>` + row('品項', esc(d.item)) + row('型號', esc(d.model)) + row('位置', esc((d.loc || '').replace(/\s+/g, ' '))) + row('狀態', esc(d.status))
-    + row('備註', esc(d.note).replace(/\n/g, '<br>')) + row('說明書', d.manual ? `<a href="${esc(d.manual)}" target="_blank" rel="noopener">開啟</a>` : '')
-    + row('相關', d.ref ? (/^https?:/.test(d.ref) ? `<a href="${esc(d.ref)}" target="_blank" rel="noopener">開啟</a>` : esc(d.ref)) : '') + row('來源', esc(d.src)) + '</dl>';
-  const ins = LINKS.filter(l => l.to === id), outs = LINKS.filter(l => l.from === id);
-  const li = (ls, k) => ls.length ? `<h3>${k}</h3><div class="list">` + ls.map(l => { const o = k === '接入' ? l.from : l.to; return `<button type="button" data-node="${esc(o)}">${esc(label(o))}　${esc(typeName(l.type))}${l.ok ? '' : '　待確認'}</button>`; }).join('') + '</div>' : '';
-  return h + li(ins, '接入') + li(outs, '輸出');
-}
-
-function render(){ paint(); document.body.classList.toggle('dev', S.view === 'dev'); bar(); ({ wire, dev: devices, trouble })[S.view](); info(); }
-
-/* ---------- events ---------- */
+/* ---------- 事件 ---------- */
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-act],[data-node],[data-link]');
-  if (!t) { if (e.target.closest('#view') && S.view === 'wire' && S.sel) { S.sel = null; render(); } return; }
-  if (t.dataset.node) { S.sel = S.sel === t.dataset.node ? null : t.dataset.node; if (S.view === 'trouble' && !S.tr.target) S.sel = t.dataset.node; return render(); }
-  if (t.dataset.link) { const k = 'L:' + t.dataset.link; S.sel = S.sel === k ? null : k; return render(); }
+  const t = e.target.closest('[data-act]');
+  if (!t || !t.dataset.act) return;
   const a = t.dataset.act, v = t.dataset.val;
-  if (a === 'view') { S.view = v; S.sel = null; store.set('view', v); }
-  else if (a === 'layer') { S.layer = v; S.sel = null; store.set('layer', v); }
-  else if (a === 'type') { S.type = v; S.tr = { target: null, step: 0, bad: null }; }
-  else if (a === 'loc') { S.loc = v; }
-  else if (a === 'dark') { S.dark = !S.dark; store.set('dark', S.dark); }
-  else if (a === 'tune') { S.tune = !S.tune; }
-  else if (a === 'present') { present(true); return; }
-  else if (a === 'target') { S.tr = { target: v, step: 0, bad: null }; S.sel = v; }
-  else if (a === 'ok') { S.tr.step++; const c = chain(S.tr.target); S.sel = c[S.tr.step]?.id || null; }
-  else if (a === 'bad') { S.tr.bad = v; S.sel = v; }
-  else if (a === 'retarget') { S.tr = { target: null, step: 0, bad: null }; S.sel = null; }
-  render();
+  if (a === 'go') go(v);
+  else if (a === 'back') back();
+  else if (a === 'home') { S.hist = []; S.screen = 'home'; render(); scrollTo(0, 0); }
+  else if (a === 'adv') location.href = 'advanced.html';
+  else if (a === 'sym') { const [k, i] = v.split(':'); startFlow(SYS.symptoms[k][+i]); }
+  else if (a === 'yes') { S.hist.push({ screen: 'flow', q: S.q }); S.q = after(S.q); render(); scrollTo(0, 0); }
+  else if (a === 'no') { S.hist.push({ screen: 'flow', q: S.q }); S.q = { ...S.q, kind: 'bad' }; render(); scrollTo(0, 0); }
+  else if (a === 'pick') {
+    S.hist.push({ screen: 'flow', q: S.q });
+    if (v === '*') { const o = S.q.opts; S.q = { kind: 'check', node: o[0], i: 99, n: S.q.n, down: S.q.node, rest: o.slice(1) }; }
+    else S.q = { kind: 'check', node: v, i: 99, n: S.q.n, down: S.q.node };
+    render(); scrollTo(0, 0);
+  }
+  else if (a === 'restart') { const s = S.sym; S.hist = []; startFlow(s); S.hist = [{ screen: 'home' }]; }
+  else if (a === 'loc') { S.loc = v; go('devs'); }
+  else if (a === 'dev') { S.dev = v; go('dev'); }
+  else if (a === 'dark') { S.dark = !S.dark; store.set('dark', S.dark); render(); }
+  else if (a === 'tune') { S.tune = !S.tune; render(); }
 });
-document.addEventListener('input', e => {
-  const k = e.target.dataset.set; if (!k) return;
-  S[k] = +e.target.value; store.set(k, S[k]); paint();
-});
-function present(on){
-  document.documentElement.classList.toggle('present', on);
-  try {
-    if (on && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
-    if (!on && document.fullscreenElement) document.exitFullscreen().catch(() => {});
-  } catch(e){}
-  render();
-}
-$('#exit').addEventListener('click', () => present(false));
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.documentElement.classList.contains('present')) present(false); });
-document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && document.documentElement.classList.contains('present')) present(false); });
-let raf = 0;
-addEventListener('resize', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (S.view === 'wire') wire(); }); });
-addEventListener('beforeprint', () => { S.printW = 1000; if (S.view === 'wire') wire(); });
-addEventListener('afterprint', () => { S.printW = 0; if (S.view === 'wire') wire(); });
-
+document.addEventListener('input', e => { const k = e.target.dataset.set; if (!k) return; S[k] = +e.target.value; store.set(k, S[k]); paint(); });
 Promise.all(['data/system.json', 'data/devices.json'].map(u => fetch(u).then(r => r.json()))).then(([sys, devs]) => {
   SYS = sys; LINKS = sys.links;
   devs.forEach(d => DEV[d.id] = d); sys.devices.forEach(d => DEV[d.id] = d);
-  if (!SYS.layers.some(l => l.id === S.layer)) S.layer = SYS.layers[0].id;
   render();
-}).catch(() => { $('#view').textContent = '資料載入失敗，請重新整理'; });
+}).catch(() => { $('#app').textContent = '資料載入失敗，請重新整理'; });
 })();
 </script>
 </body>
