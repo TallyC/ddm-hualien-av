@@ -1,0 +1,9 @@
+{
+ "name": "花蓮分院音控室",
+ "short_name": "音控室",
+ "start_url": "./",
+ "display": "standalone",
+ "background_color": "#f8f8fa",
+ "theme_color": "#f8f8fa",
+ "lang": "zh-Hant"
+}
